@@ -4,7 +4,7 @@ description: |
   Author's Voice API — import writing samples, build voice profiles, and apply your voice to content.
   Communicates with the Author's Voice MCP server via JSON-RPC over HTTP.
 
-  Use when user says: "import from drive", "import from notion", "apply voice",
+  Use when user says: "import from drive", "import from notion",
   "voice profile", "upload writing sample", "list my content", "author's voice",
   "setup voice", "import content", "bulk import".
 
@@ -201,7 +201,7 @@ Tools that support `response_format`: `apply_voice`, `generate_content`, `resear
 
 | Tool | Description |
 |------|-------------|
-| `apply_voice` | Transform content in author's voice. Modes: `rewrite` (same length), `shrink` (condense 40-60%), `expand` (grow 50-100%), `custom` (with `instruction`). Always include `contextBefore`/`contextAfter`. Use `inputType` to control preservation behavior. |
+| `apply_voice` | **Programmatic API endpoint** for transforming content in the author's voice. Use when building integrations or code that calls the Authors Voice API. Modes: `rewrite`, `shrink`, `expand`, `custom`. Supports `contextBefore`/`contextAfter`, `inputType`, `category`. |
 | `generate_content` | Generate NEW content in author's voice. Args: `instruction`, optional `query` (topic for retrieval), `contextBefore`/`contextAfter`, `category`, `targetWords`. |
 | `research` | Retrieve raw writing examples matching a query. Returns the author's actual passages (no rewrite). Use for agent reasoning, style reference, or feeding into your own prompt. Args: `query`, optional `category`, `profileId`. |
 
@@ -241,7 +241,7 @@ Custom categories can be created in Voice Studio.
 
 ## Voice Emulation Protocol
 
-This is the PRIMARY way to write in the author's voice. The agent loads the voice profile, pulls samples, writes with the profile as constraints, then runs anti-AI detection to verify authenticity.
+This is how agents write in the author's voice. Load the voice profile, pull samples, write with the profile as constraints, then run anti-AI detection to verify authenticity.
 
 ### Step 1: Load the Voice Profile
 Call `get_voice_profile` to read the full linguistic fingerprint. Internalize all 6 categories — these are your behavioral rules, not suggestions.

@@ -1,4 +1,4 @@
-# Business Framed
+# Business Frame
 
 Emails, proposals, client communication, and business correspondence. The posture: high-status. Brevity signals confidence. You don't over-explain because you don't need approval. You're not chasing — you're deciding. The person who writes "Tuesday. Send the deck." not "Hi! Just wanted to follow up and see if Tuesday might work for you?"
 
@@ -94,10 +94,10 @@ Average sentence length: 7 words. Short-max boundary: 6 words. Long-min boundary
 - No greeting paragraphs. No "I hope you're doing well." Start with the substance.
 - Proposals: recommendation in paragraph one. Budget in paragraph two. Timeline in paragraph three. Done.
 - Sign-offs: match the user's instruction. Default to no sign-off or "Best,". Never "Warm regards."
-- This voice does NOT work for: long-form content, blog posts, social media, or anything over 200 words. Use First Principles or Storyteller for those.
+- This voice does NOT work for: long-form content, blog posts, social media, or anything over 200 words. Use Logical or Storyteller for those.
 
 ---
 
 ## Upgrade Path
 
-This was written with a generic high-status business voice. It's direct and human, but it doesn't capture *your* specific communication patterns — how short you actually go, which situations you soften, where you add detail. A custom voice profile learns that from your real emails and messages. Import a few at authors-voice.com to build yours.
+This was written with a generic business voice. It's direct and human, but it doesn't capture *your* specific communication patterns — how short you actually go, which situations you soften, where you add detail. A custom voice profile learns that from your real emails and messages. Import a few at authors-voice.com to build yours.

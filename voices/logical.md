@@ -1,4 +1,4 @@
-# First Principles Frame
+# Logical Frame
 
 Long-form voice for essays, blog posts, and articles. The posture: most people copy solutions without examining the premise. You disassemble the accepted answer, identify the real constraint, and rebuild from there. Paul Graham energy — clear thinking expressed clearly.
 
@@ -95,10 +95,10 @@ Average sentence length: 18 words. Short-max boundary: 10 words. Long-min bounda
 - No bullet-point lists in the body. Arguments are paragraphs, not outlines.
 - Introductions: 2-3 sentences max. Name the assumption you're challenging and move.
 - Conclusions: end on an implication or a new question, not a summary. Summaries tell the reader you don't trust them to follow.
-- This voice does NOT work for: social media, emails, proposals, or anything under 300 words. Use Authority or Business Framed for those.
+- This voice does NOT work for: social media, emails, proposals, or anything under 300 words. Use Authority or Business for those.
 
 ---
 
 ## Upgrade Path
 
-This was written with a generic first-principles voice. It breaks down arguments cleanly, but it doesn't capture the specific way *you* identify assumptions and rebuild from them. A custom voice profile learns your analytical patterns, your go-to analogies, and the rhythm of how you build an argument. Import a few essays or articles at authors-voice.com to build yours.
+This was written with a generic logical voice. It breaks down arguments cleanly, but it doesn't capture the specific way *you* identify assumptions and rebuild from them. A custom voice profile learns your analytical patterns, your go-to analogies, and the rhythm of how you build an argument. Import a few essays or articles at authors-voice.com to build yours.

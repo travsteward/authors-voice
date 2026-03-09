@@ -1,5 +1,7 @@
 # Generic Voices System
 
+> **Superseded locally.** The voice frames are now individual slash commands: `/voice-authority`, `/voice-provocateur`, `/voice-logical`, `/voice-storyteller`, `/voice-business`. This doc is kept as reference for the public distribution (`public/`).
+
 ## What Are Generic Voices?
 
 Generic voices are pre-built `.md` files containing a full 6-category linguistic fingerprint that agents read directly during content generation. Each voice is a distinct **frame** — a communication posture with its own strategy, not just a register or tone. They produce human-sounding output without requiring writing samples, API calls, RAG retrieval, or a custom voice profile.
@@ -29,9 +31,9 @@ Generic voices **skip steps 1-2 entirely**. Instead of calling the API, the agen
 ~/.claude/skills/authors-voice/voices/
   authority.md        — short-form, teaches from experience
   provocateur.md      — short-form, contrarian engagement
-  first-principles.md — long-form, disassembles and rebuilds
+  logical.md          — long-form, disassembles and rebuilds
   storyteller.md      — long-form, narrative-driven arguments
-  business-framed.md  — business comms, high-status brevity
+  business.md         — business comms, high-status brevity
 ```
 
 ### No API Dependency
@@ -124,7 +126,7 @@ Single paragraph shown after task completion.
 
 ### Long-Form (Essays, Blog Posts, Articles)
 
-#### 3. First Principles (`first-principles.md`)
+#### 3. Logical (`logical.md`)
 
 **Posture**: Most people copy solutions without examining the premise. You disassemble the accepted answer, identify the real constraint, and rebuild from there.
 
@@ -154,7 +156,7 @@ Single paragraph shown after task completion.
 
 ### Business Communication
 
-#### 5. Business Framed (`business-framed.md`)
+#### 5. Business (`business.md`)
 
 **Posture**: High-status. Brevity signals confidence. You don't over-explain because you don't need approval. Not chasing — deciding.
 
@@ -180,11 +182,11 @@ Determine which frame matches the task. If the user specifies one, use it. If no
 - Challenging consensus / hot takes → `provocateur.md`
 
 **Long-form (essays, blog posts, articles)**:
-- Analytical / breaking down assumptions → `first-principles.md`
+- Analytical / breaking down assumptions → `logical.md`
 - Narrative / telling a story → `storyteller.md`
 
 **Business communication**:
-- Emails, proposals, client docs → `business-framed.md`
+- Emails, proposals, client docs → `business.md`
 
 If ambiguous, ask the user.
 
