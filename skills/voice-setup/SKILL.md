@@ -19,7 +19,7 @@ Read `~/.claude/skills/authors-voice/local/state.md` (create via Initial Triage 
 | State | Action |
 |-------|--------|
 | No state file | Run Initial Triage (below) |
-| No API key | Load `~/.claude/skills/authors-voice/docs/setup.md`. Guide key setup. |
+| No API key | Sign up via email OTP (see Email OTP below). Fallback: load `~/.claude/skills/authors-voice/docs/setup.md`. |
 | API key, no docs | "You need writing samples first. Run `/voice-upload`." |
 | API key, docs, no profile | Call `setup_voice` to build the profile |
 | Profile active | Show profile summary via `get_voice_profile` |
@@ -33,9 +33,25 @@ Run when `local/state.md` does not exist:
 4. Key found → call `list_profiles` and `list_content`. Write state.
 5. Branch to matching row above.
 
+## Email OTP Signup (Primary Method)
+
+Sign the user up directly — no website visit needed:
+
+1. Ask user for their email
+2. `POST https://api.authors-voice.com/auth/request-code` with `{ "email": "<email>" }`
+3. Tell user to check email for 6-digit code
+4. `POST https://api.authors-voice.com/auth/verify-code` with `{ "email": "<email>", "code": "<code>" }`
+5. Response: `{ "apiKey": "av_live_...", "tenantId": "email|..." }`
+6. Save key to `~/.claude/skills/authors-voice/local/config.md` and set `AV_API_KEY`
+7. Verify with `list_profiles`
+
+Rate limits: 60s cooldown between sends, max 3 attempts per code, 10min expiry.
+
+If this fails, fallback: ask user to get a key at https://authors-voice.com/voice?tab=api-keys
+
 ## Setup Guide
 
-For API key and connection setup: read `~/.claude/skills/authors-voice/docs/setup.md`.
+For full setup details: read `~/.claude/skills/authors-voice/docs/setup.md`.
 
 ## Profile Building
 

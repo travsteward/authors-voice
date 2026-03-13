@@ -99,19 +99,33 @@ Categories control which writing samples GrepRAG retrieves. Wrong category = wro
 
 Follow this when `AV_API_KEY` is not set or when the user says "setup voice":
 
-1. **No AV_API_KEY?** → Tell the user:
-   > Visit **https://authors-voice.com/voice?tab=api-keys** to generate your API key.
-   > Log in, click Generate, copy the key, and paste it here.
+1. **No AV_API_KEY?** → Ask the user for their email address, then sign them up directly:
+   ```
+   POST https://api.authors-voice.com/auth/request-code
+   Body: { "email": "<user's email>" }
+   → { "sent": true, "email": "...", "expires_in_seconds": 600 }
+   ```
+   Tell user: "Check your email for a 6-digit code from Author's Voice."
 
-2. **User pastes key** → Set `AV_API_KEY`, test with `list_profiles` to verify.
+2. **User provides code** → Verify and get API key:
+   ```
+   POST https://api.authors-voice.com/auth/verify-code
+   Body: { "email": "<user's email>", "code": "<6 digits>" }
+   → { "apiKey": "av_live_...", "tenantId": "email|..." }
+   ```
+   Rate limits: 60s cooldown between sends, max 3 attempts per code, 10min expiry.
 
-3. **Ask about connections**:
+3. **Save key** → Store in `~/.claude/skills/authors-voice/local/config.md`, set `AV_API_KEY`, test with `list_profiles`.
+
+4. **If email OTP fails** → Fallback: ask user to get a key at https://authors-voice.com/voice?tab=api-keys
+
+5. **Ask about connections**:
    > Want to connect Google Drive or Notion for importing your writing?
    > Visit **https://authors-voice.com/voice?tab=connections** to connect your accounts.
 
-4. **User connects** → Call `list_google_drive_docs` or `list_notion_pages` to verify.
+6. **User connects** → Call `list_google_drive_docs` or `list_notion_pages` to verify.
 
-5. **Guide selection** → Present doc list, get authenticity tags, `bulk_import` → `setup_voice` → done.
+7. **Guide selection** → Present doc list, get authenticity tags, `bulk_import` → `setup_voice` → done.
 
 ---
 
@@ -140,14 +154,22 @@ Full spec: `docs/generic-voices.md`
 
 ## Setup
 
-**API Key**: Set your API key at session start. Get yours at [authors-voice.com/voice?tab=api-keys](https://authors-voice.com/voice?tab=api-keys).
-```bash
-export AV_API_KEY="av_live_YOUR_KEY_HERE"
+**API Key**: Sign the user up directly via email OTP (no website needed):
+
 ```
+1. POST https://api.authors-voice.com/auth/request-code  { "email": "<email>" }
+2. User checks email for 6-digit code
+3. POST https://api.authors-voice.com/auth/verify-code   { "email": "<email>", "code": "<code>" }
+   → { "apiKey": "av_live_...", "tenantId": "email|..." }
+4. Save key, set AV_API_KEY, verify with list_profiles
+```
+
+If email OTP fails, fallback: get a key at [authors-voice.com/voice?tab=api-keys](https://authors-voice.com/voice?tab=api-keys).
+
+**OpenWriter**: For the best experience, use Author's Voice inside OpenWriter: `npx openwriter install-skill`
 
 **Base URL**: Defaults to production. Override with `AV_BASE_URL` env var.
 ```bash
-# Production (default)
 AV_BASE_URL="https://api.authors-voice.com/api/voice/mcp"
 ```
 
