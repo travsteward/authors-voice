@@ -28,10 +28,12 @@ Fallback: config.md → $AV_API_KEY → ~/.openwriter/config.json.
 Read `~/.claude/skills/authors-voice/docs/protocol.md` and follow the 4 steps.
 
 ### Summary (protocol details in the doc):
-1. **Load profile**: Call `get_voice_profile`. Internalize 6 categories as hard rules.
-2. **Pull samples**: Call `research` with topic-matching queries. 2-3 result sets.
+1. **Load profile**: `GET /api/voice/profiles/default` — internalize 6 categories as hard rules.
+2. **Pull samples**: `POST /api/voice/research` with `{query, category}` — 2-3 result sets.
 3. **Write**: Apply voice rules as constraints. YOU write the content.
 4. **Anti-AI check**: Read `~/.claude/skills/authors-voice/docs/anti-ai.md`. Run all checks.
+
+All endpoints: `https://api.authors-voice.com` with `Authorization: Bearer $AV_API_KEY`.
 
 ## Categories
 
