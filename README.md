@@ -5,7 +5,7 @@ Import your real writing, build a voice profile, and apply your voice to any con
 ## Install
 
 ```bash
-claude install github:authors-voice/skill
+claude install github:travsteward/authors-voice
 ```
 
 Paste the command into your agent. It walks you through setup — generating an API key, connecting your accounts, and importing your writing.

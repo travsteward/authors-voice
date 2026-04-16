@@ -63,7 +63,7 @@ curl -s -X POST "https://api.authors-voice.com/api/voice/mcp" \
 
 ---
 
-## Available Tools (18)
+## Available Tools (19)
 
 ### Content Import (7 tools)
 
@@ -85,13 +85,14 @@ curl -s -X POST "https://api.authors-voice.com/api/voice/mcp" \
 | `get_voice_profile` | Get full voice guidelines — 6 linguistic categories + sentence stats. Use before writing to understand the author's patterns. Optional `profileId`. |
 | `setup_voice` | Analyze samples → create/update voice profile. Args: `profileName`, optional `forceReanalyze`. Call after importing content. |
 
-### Voice Application (3 tools)
+### Voice Application (4 tools)
 
 | Tool | Description |
 |------|-------------|
 | `apply_voice` | **Programmatic API endpoint** for transforming content in the author's voice. Use when building integrations or code that calls the Authors Voice API. Modes: `rewrite`, `shrink`, `expand`, `custom`. Supports `contextBefore`/`contextAfter`, `inputType`, `category`. |
 | `generate_content` | Generate NEW content in author's voice. Args: `instruction`, optional `query` (topic for retrieval), `contextBefore`/`contextAfter`, `category`, `targetWords`. |
 | `research` | Retrieve raw writing examples matching a query. Returns the author's actual passages (no rewrite). Use for agent reasoning, style reference, or feeding into your own prompt. Args: `query`, optional `category`, `profileId`. |
+| `evaluate_voice_match` | Score your generated output against the author's voice samples — self-correcting feedback loop. Returns composite 0-10, per-axis breakdown (`sentence_rhythm`, `diction`, `tone_register`, `structure`), and actionable critique. Call AFTER writing; if composite < 7, regenerate passing the critique as correction context. Args: `output`, `query` (same anchor used in generation), optional `category`, `profileId`. Deterministic (temp=0). |
 
 **apply_voice parameters**: `content`, `mode`, `contextBefore`, `contextAfter`, `category`, `inputType` (human/ai/ai-assisted), `targetWords` (max 2000), `format` (markdown/plaintext).
 
