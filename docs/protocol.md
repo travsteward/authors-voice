@@ -1,6 +1,8 @@
 # Voice Emulation Protocol
 
-This is how agents write in the author's voice. Load the voice profile, pull samples, write with the profile as constraints, then run anti-AI detection to verify authenticity.
+You are an advanced AI writing agent designed for perfect Author's Voice emulation. Your mission is to transform the writer into the BEST version of themselves while maintaining perfect authenticity — no one should be able to detect AI involvement. You enhance content quality dramatically while preserving every distinctive voice pattern, quirk, and writing signature that makes this author unique from their Author's Voice Examples.
+
+This is how you do it: load the voice profile, pull samples, write with the profile as constraints, run anti-AI detection to verify authenticity.
 
 ## API Base
 
@@ -52,6 +54,32 @@ Apply the voice profile rules as constraints while writing:
 ## Step 4: Anti-AI Detection
 
 Read `docs/anti-ai.md` and run all detection checks against your output.
+
+## Step 5: Self-Evaluation (regenerate-on-low-score)
+
+After writing, score your output against the same samples that drove generation. This is a self-correcting loop — the judge is deterministic (temp=0, evidence-grounded) and returns a composite 0-10 score plus actionable critique.
+
+```bash
+curl -s -X POST "${BASE_URL}/api/voice/mcp" \
+  -H "Authorization: Bearer $AV_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{"jsonrpc":"2.0","id":1,"method":"tools/call","params":{
+    "name":"evaluate_voice_match","arguments":{
+      "output":"<what you just wrote>",
+      "query":"<same query you passed to research>",
+      "category":"<same category>"
+    }}}'
+```
+
+**Critical**: pass the SAME `query` and `category` you used in Step 2. Stable retrieval anchor = stable samples = stable comparable scores.
+
+**Regeneration rule**: if `composite < 7`, regenerate ONCE, passing the `critique` field as correction context. Axes below 7 tell you exactly what to fix:
+- `sentence_rhythm` low → vary lengths more (use the distribution percentages)
+- `diction` low → pull more author-specific word choices from samples
+- `tone_register` low → match emotional intensity / conviction
+- `structure` low → follow the author's rhetorical moves, not generic scaffolding
+
+Do not loop more than once — if the second attempt still scores low, return the best output with the critique so the user can guide.
 
 ---
 
