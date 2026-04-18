@@ -10,6 +10,11 @@ description: |
 
   Requires: AV_API_KEY environment variable (av_live_...).
   Production: https://api.authors-voice.com
+metadata:
+  author: travsteward
+  version: "0.1.0"
+  repository: https://github.com/travsteward/authors-voice
+license: MIT
 ---
 
 # Author's Voice — Claude Code Skill
