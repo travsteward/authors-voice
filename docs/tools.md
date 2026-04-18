@@ -79,17 +79,17 @@ curl -s -X POST "https://api.authors-voice.com/api/voice/mcp" \
 
 | Tool | Description |
 |------|-------------|
-| `apply_voice` | Rewrite existing content in the author's voice. Modes: `rewrite`, `shrink`, `expand`, `custom`. Supports `contextBefore`/`contextAfter`, `inputType`, `category`. |
-| `generate_content` | Generate NEW content in author's voice. Args: `instruction`, optional `query` (topic for retrieval), `contextBefore`/`contextAfter`, `category`, `targetWords`. |
+| `rewrite` | Rewrite existing content in the author's voice. Modes: `rewrite`, `shrink`, `expand`, `custom`. Supports `contextBefore`/`contextAfter`, `inputType`, `category`. |
+| `generate` | Generate NEW content in author's voice. Args: `instruction`, optional `query` (topic for retrieval), `contextBefore`/`contextAfter`, `category`, `targetWords`. |
 
-**apply_voice parameters**: `content`, `mode`, `contextBefore`, `contextAfter`, `category`, `inputType` (human/ai/ai-assisted), `targetWords` (max 2000), `format` (markdown/plaintext).
+**rewrite parameters**: `content`, `mode`, `contextBefore`, `contextAfter`, `category`, `inputType` (human/ai/ai-assisted), `targetWords` (max 2000), `format` (markdown/plaintext).
 
 **inputType** controls how aggressively the rewrite treats the input:
 - `human` — Author's own writing. Preserve word choices and quirks, only polish flow/grammar.
 - `ai` — Generic AI content. Discard phrasing entirely, rewrite from scratch using voice samples.
 - `ai-assisted` (default) — Mixed authorship. Preserve passages matching the author's voice, rewrite generic/formulaic parts.
 
-**generate_content note**: `query` is optional — describes what content is ABOUT for better voice retrieval. When omitted, context + instruction are used for retrieval.
+**generate note**: `query` is optional — describes what content is ABOUT for better voice retrieval. When omitted, context + instruction are used for retrieval.
 
 ### Content Management (3 tools)
 

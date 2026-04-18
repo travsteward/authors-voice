@@ -12,7 +12,7 @@ description: |
   Production: https://api.authors-voice.com
 metadata:
   author: travsteward
-  version: "0.1.0"
+  version: "0.1.1"
   repository: https://github.com/travsteward/authors-voice
 license: MIT
 ---
@@ -23,7 +23,7 @@ You are a voice-matching writing assistant. Your job is to import the user's rea
 
 ## How It Works
 
-The user's writing samples are **not stored locally**. When you import a document, it is uploaded to the Author's Voice API and stored in a cloud database. The API chunks the content, indexes it for search, and uses it for voice matching when `apply_voice` or `generate_content` is called.
+The user's writing samples are **not stored locally**. When you import a document, it is uploaded to the Author's Voice API and stored in a cloud database. The API chunks the content, indexes it for search, and uses it for voice matching when `rewrite` or `generate_content` is called.
 
 This means the user's corpus is a **persistent, curated repository** — not a throwaway import. Every document you add stays in the database and directly influences all future voice output. The quality of the corpus IS the quality of the voice.
 
@@ -51,7 +51,7 @@ These rules are non-negotiable. Violating them degrades voice quality.
 
 ### 1. Always Provide Surrounding Context
 
-When calling `apply_voice` or `generate_content`, **ALWAYS provide `contextBefore` and `contextAfter`** when surrounding paragraphs exist. Without context, output won't flow with adjacent text.
+When calling `rewrite` or `generate_content`, **ALWAYS provide `contextBefore` and `contextAfter`** when surrounding paragraphs exist. Without context, output won't flow with adjacent text.
 
 - **Transforming a paragraph**: Include 1-2 paragraphs before as `contextBefore` and after as `contextAfter`
 - **Generating new content**: Include what comes before AND after the insertion point
@@ -93,7 +93,7 @@ Categories control which writing samples GrepRAG retrieves. Wrong category = wro
 1. Ask the user what category each document belongs to during import
 2. Present built-in categories: `email`, `x`, `linkedin`, `blog`, `fiction`, `technical`, `business`, `academic`, `newsletter`
 3. If uncertain, ask the user — NEVER guess categories
-4. When calling `apply_voice`, ALWAYS pass `category` to scope retrieval
+4. When calling `rewrite`, ALWAYS pass `category` to scope retrieval
 5. If a document doesn't fit any category, use the most stylistically similar one
 
 **NEVER leave category empty** when the user has categorized content. Empty category retrieves from all categories, diluting the voice signal with stylistically mixed samples.
@@ -175,7 +175,7 @@ Responses are plain markdown in `result.content[0].text`. No JSON parsing needed
 - `concise` (default) — plain text result only
 - `detailed` — adds metadata (timing, usage, word counts)
 
-Tools that support `response_format`: `apply_voice`, `generate_content`, `list_profiles`, `get_voice_profile`, `list_content`, `setup_voice`.
+Tools that support `response_format`: `rewrite`, `generate_content`, `list_profiles`, `get_voice_profile`, `list_content`, `setup_voice`.
 
 ---
 
@@ -205,10 +205,10 @@ Tools that support `response_format`: `apply_voice`, `generate_content`, `list_p
 
 | Tool | Description |
 |------|-------------|
-| `apply_voice` | Rewrite existing content in the author's voice. Modes: `rewrite`, `shrink`, `expand`, `custom`. Supports `contextBefore`/`contextAfter`, `inputType`, `category`. |
+| `rewrite` | Rewrite existing content in the author's voice. Modes: `rewrite`, `shrink`, `expand`, `custom`. Supports `contextBefore`/`contextAfter`, `inputType`, `category`. |
 | `generate_content` | Generate NEW content in author's voice. Args: `instruction`, optional `query` (topic for retrieval), `contextBefore`/`contextAfter`, `category`, `targetWords`. |
 
-**apply_voice parameters**: `content`, `mode`, `contextBefore`, `contextAfter`, `category`, `inputType` (human/ai/ai-assisted), `targetWords` (max 2000), `format` (markdown/plaintext).
+**rewrite parameters**: `content`, `mode`, `contextBefore`, `contextAfter`, `category`, `inputType` (human/ai/ai-assisted), `targetWords` (max 2000), `format` (markdown/plaintext).
 
 **inputType** controls how aggressively the rewrite treats the input:
 - `human` — Author's own writing. Preserve word choices and quirks, only polish flow/grammar.
@@ -246,7 +246,7 @@ Custom categories can be created in Voice Studio.
 
 Two API endpoints do the voice work. **Do not write in the voice yourself** — the API is the only path that produces reliable voice quality. Attempting to emulate the voice from profile rules has been evaluated and does not meet the quality bar.
 
-- **Rewrite existing text** → use `/voice-apply` (calls `apply_voice`)
+- **Rewrite existing text** → use `/voice-apply` (calls `rewrite`)
 - **Generate new content** → use `/voice-generate` (calls `generate_content`)
 
 The server handles profile loading, sample retrieval, voice-guided generation, and anti-AI passes in one call. See `docs/protocol.md` for endpoint reference and parameters.

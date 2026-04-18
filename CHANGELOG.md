@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/), and this project adheres to [Semantic Versioning](https://semver.org/).
 
+## [0.1.1] - 2026-04-18
+
+### Fixed
+- Corrected MCP tool names to match the live backend. `/voice-apply` now calls `rewrite` (was `apply_voice`) and `/voice-generate` now calls `generate` (was `generate_content`). v0.1.0 docs referenced the wrong names and would 404 against the production API.
+
 ## [0.1.0] - 2026-04-18
 
 First versioned release. Refactored from agent-writes-with-rules to API-only.

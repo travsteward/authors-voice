@@ -2,7 +2,7 @@
 name: voice-apply
 description: |
   Rewrite existing content in the user's voice via the Author's Voice API.
-  Calls apply_voice — server-side pipeline handles profile loading, sample
+  Calls rewrite — server-side pipeline handles profile loading, sample
   retrieval, voice-guided rewrite, and anti-AI passes.
 
   Use when user says: "rewrite in my voice", "polish in my voice",
@@ -13,7 +13,7 @@ description: |
 
 # Voice Apply
 
-Rewrite the user's existing text in their voice by calling the `apply_voice`
+Rewrite the user's existing text in their voice by calling the `rewrite`
 endpoint. The server does the voice work — you gather inputs, call the API,
 return the result. Do not attempt to emulate the voice yourself.
 
@@ -44,7 +44,7 @@ curl -s -N -X POST "https://api.authors-voice.com/api/voice/mcp" \
   -H "Content-Type: application/json" \
   -H "Accept: application/json, text/event-stream" \
   -d '{"jsonrpc":"2.0","id":1,"method":"tools/call","params":{
-    "name":"apply_voice","arguments":{
+    "name":"rewrite","arguments":{
       "content":"<text>",
       "mode":"rewrite",
       "category":"<category>",

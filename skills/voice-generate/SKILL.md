@@ -2,7 +2,7 @@
 name: voice-generate
 description: |
   Generate NEW content in the user's voice via the Author's Voice API.
-  Calls generate_content — server-side pipeline handles profile loading,
+  Calls generate — server-side pipeline handles profile loading,
   sample retrieval, voice-guided generation, and anti-AI passes.
 
   Use when user says: "write a post about X", "draft an email about X",
@@ -14,7 +14,7 @@ description: |
 
 # Voice Generate
 
-Generate new content in the user's voice by calling the `generate_content`
+Generate new content in the user's voice by calling the `generate`
 endpoint. The server does the voice work — you gather inputs, call the API,
 return the result. Do not attempt to emulate the voice yourself.
 
@@ -45,7 +45,7 @@ curl -s -N -X POST "https://api.authors-voice.com/api/voice/mcp" \
   -H "Content-Type: application/json" \
   -H "Accept: application/json, text/event-stream" \
   -d '{"jsonrpc":"2.0","id":1,"method":"tools/call","params":{
-    "name":"generate_content","arguments":{
+    "name":"generate","arguments":{
       "instruction":"<what to write>",
       "category":"<category>",
       "query":"<optional topic>",

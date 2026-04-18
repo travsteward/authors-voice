@@ -2,7 +2,7 @@
 name: voice-automate
 description: |
   Wire Author's Voice API endpoints into automated pipelines.
-  Build integrations that call apply_voice or generate_content programmatically.
+  Build integrations that call rewrite or generate programmatically.
 
   Use when user says: "automate voice", "voice API", "voice integration",
   "build voice pipeline", "programmatic voice", "voice automation",
@@ -24,10 +24,10 @@ Build automated pipelines that call the Author's Voice API programmatically.
 Base URL: `https://api.authors-voice.com/api/voice/mcp`
 Protocol: JSON-RPC over HTTP, SSE responses.
 
-### apply_voice (rewrite existing content)
+### rewrite (rewrite existing content)
 ```json
 {"jsonrpc":"2.0","id":1,"method":"tools/call","params":{
-  "name":"apply_voice","arguments":{
+  "name":"rewrite","arguments":{
     "content":"text to rewrite",
     "mode":"rewrite|shrink|expand|custom",
     "category":"x|blog|email|...",
@@ -37,10 +37,10 @@ Protocol: JSON-RPC over HTTP, SSE responses.
 }}
 ```
 
-### generate_content (create new content)
+### generate (create new content)
 ```json
 {"jsonrpc":"2.0","id":1,"method":"tools/call","params":{
-  "name":"generate_content","arguments":{
+  "name":"generate","arguments":{
     "instruction":"what to write",
     "query":"topic for retrieval",
     "category":"x|blog|email|...",
@@ -59,7 +59,7 @@ Accept: application/json, text/event-stream
 
 ## Existing Automation Example
 
-`~/.claude/skills/tweet-writer/polish.js` — calls `apply_voice` with category `x`, mode `rewrite`, intensity `moderate`. Reference implementation for CLI automation.
+`~/.claude/skills/tweet-writer/polish.js` — calls `rewrite` with category `x`, mode `rewrite`, intensity `moderate`. Reference implementation for CLI automation.
 
 ## Full Tool Reference
 

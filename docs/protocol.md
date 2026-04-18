@@ -7,8 +7,8 @@ sample retrieval, voice-guided generation, and anti-AI passes.
 **Do not attempt to emulate the voice yourself** — the API is the only path
 that produces reliable voice quality.
 
-- **Rewrite existing text** → `apply_voice` (see `/voice-apply`)
-- **Generate new content** → `generate_content` (see `/voice-generate`)
+- **Rewrite existing text** → `rewrite` (see `/voice-apply`)
+- **Generate new content** → `generate` (see `/voice-generate`)
 
 ## API Base
 
@@ -18,7 +18,7 @@ BASE_URL=https://api.authors-voice.com
 
 All endpoints require `Authorization: Bearer $AV_API_KEY`.
 
-## apply_voice — Rewrite Existing Text
+## rewrite — Rewrite Existing Text
 
 ```bash
 curl -s -N -X POST "${BASE_URL}/api/voice/mcp" \
@@ -26,7 +26,7 @@ curl -s -N -X POST "${BASE_URL}/api/voice/mcp" \
   -H "Content-Type: application/json" \
   -H "Accept: application/json, text/event-stream" \
   -d '{"jsonrpc":"2.0","id":1,"method":"tools/call","params":{
-    "name":"apply_voice","arguments":{
+    "name":"rewrite","arguments":{
       "content":"<text to rewrite>",
       "mode":"rewrite",
       "category":"<x|blog|email|...>",
@@ -53,7 +53,7 @@ curl -s -N -X POST "${BASE_URL}/api/voice/mcp" \
 - `ai` — generic AI content. Discard phrasing entirely; rewrite from scratch using voice samples.
 - `ai-assisted` (default) — mixed. Preserve author-sounding passages; rewrite generic parts.
 
-## generate_content — Create New Content
+## generate — Create New Content
 
 ```bash
 curl -s -N -X POST "${BASE_URL}/api/voice/mcp" \
@@ -61,7 +61,7 @@ curl -s -N -X POST "${BASE_URL}/api/voice/mcp" \
   -H "Content-Type: application/json" \
   -H "Accept: application/json, text/event-stream" \
   -d '{"jsonrpc":"2.0","id":1,"method":"tools/call","params":{
-    "name":"generate_content","arguments":{
+    "name":"generate","arguments":{
       "instruction":"<what to write>",
       "category":"<x|blog|email|...>",
       "query":"<optional topic keywords>",
