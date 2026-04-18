@@ -13,9 +13,10 @@ description: |
 
 Build automated pipelines that call the Author's Voice API programmatically.
 
-## When to Use This vs /voice-apply
+## When to Use This vs /voice-apply / /voice-generate
 
-- `/voice-apply` — the agent writes content itself using voice rules as constraints
+- `/voice-apply` — interactively rewrite text via the API
+- `/voice-generate` — interactively generate new content via the API
 - `/voice-automate` — build CODE that calls the API endpoints for automated pipelines
 
 ## API Endpoints
@@ -48,29 +49,6 @@ Protocol: JSON-RPC over HTTP, SSE responses.
 }}
 ```
 
-### research (retrieve samples)
-```json
-{"jsonrpc":"2.0","id":1,"method":"tools/call","params":{
-  "name":"research","arguments":{
-    "query":"topic query",
-    "category":"x|blog|email|..."
-  }
-}}
-```
-
-### evaluate_voice_match (score output against samples)
-```json
-{"jsonrpc":"2.0","id":1,"method":"tools/call","params":{
-  "name":"evaluate_voice_match","arguments":{
-    "output":"the generated text to score",
-    "query":"SAME query used in generation",
-    "category":"x|blog|email|..."
-  }
-}}
-```
-
-Returns composite 0-10 + per-axis scores (`sentence_rhythm`, `diction`, `tone_register`, `structure`) + `critique`. Deterministic (temp=0, evidence-grounded). Self-correcting loop pattern: after `apply_voice` or `generate_content`, call `evaluate_voice_match` with the same `query`; if composite < 7, re-run generation passing `critique` as correction context. Stable anchor (same query/category) = stable comparable scores.
-
 ## Auth Header
 
 ```
@@ -85,4 +63,4 @@ Accept: application/json, text/event-stream
 
 ## Full Tool Reference
 
-Read `~/.claude/skills/authors-voice/docs/tools.md` for all 19 tools.
+Read `~/.claude/skills/authors-voice/docs/tools.md` for all 17 tools.

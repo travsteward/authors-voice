@@ -129,29 +129,6 @@ Follow this when `AV_API_KEY` is not set or when the user says "setup voice":
 
 ---
 
-## Generic Voices
-
-Pre-built voice *frames* for users without writing samples or a custom profile. Each frame is a distinct communication posture, not a generic register. No API key, no network calls — the agent reads a local `.md` file and applies it as behavioral constraints.
-
-**Short-form frames** (social media, threads, posts):
-- **Authority** (`voices/authority.md`) — teaches from experience, specificity is the credibility signal
-- **Provocateur** (`voices/provocateur.md`) — contrarian takes, forces engagement through disagreement
-
-**Long-form frames** (essays, blog posts, articles):
-- **First Principles** (`voices/first-principles.md`) — disassembles assumptions, rebuilds from bedrock
-- **Storyteller** (`voices/storyteller.md`) — narrative-driven, every argument is a real story
-
-**Business frame**:
-- **Business Framed** (`voices/business-framed.md`) — high-status brevity, 12-word sentence ceiling, not chasing
-
-**When to offer:** No `AV_API_KEY` set, no voice profile built, or user explicitly asks for a generic/quick voice.
-
-**Protocol:** Select frame → read the `.md` file → write with all rules as hard constraints → Tier 1 anti-AI checks → apply the file's pre-resolved Tier 2 decisions. Show upgrade blurb once per session after task completion.
-
-Full spec: `docs/generic-voices.md`
-
----
-
 ## Setup
 
 **API Key**: Sign the user up directly via email OTP (no website needed):
@@ -189,15 +166,15 @@ curl -s -N -X POST "${AV_BASE_URL:-https://api.authors-voice.com/api/voice/mcp}"
 
 Responses are plain markdown in `result.content[0].text`. No JSON parsing needed — read the text directly.
 
-7 core tools accept an optional `response_format` parameter:
+6 core tools accept an optional `response_format` parameter:
 - `concise` (default) — plain text result only
 - `detailed` — adds metadata (timing, usage, word counts)
 
-Tools that support `response_format`: `apply_voice`, `generate_content`, `research`, `list_profiles`, `get_voice_profile`, `list_content`, `setup_voice`.
+Tools that support `response_format`: `apply_voice`, `generate_content`, `list_profiles`, `get_voice_profile`, `list_content`, `setup_voice`.
 
 ---
 
-## Available Tools (18)
+## Available Tools (17)
 
 ### Content Import (7 tools)
 
@@ -219,13 +196,12 @@ Tools that support `response_format`: `apply_voice`, `generate_content`, `resear
 | `get_voice_profile` | Get full voice guidelines — 6 linguistic categories + sentence stats. Use before writing to understand the author's patterns. Optional `profileId`. |
 | `setup_voice` | Analyze samples → create/update voice profile. Args: `profileName`, optional `forceReanalyze`. Call after importing content. |
 
-### Voice Application (3 tools)
+### Voice Application (2 tools)
 
 | Tool | Description |
 |------|-------------|
-| `apply_voice` | **Programmatic API endpoint** for transforming content in the author's voice. Use when building integrations or code that calls the Authors Voice API. Modes: `rewrite`, `shrink`, `expand`, `custom`. Supports `contextBefore`/`contextAfter`, `inputType`, `category`. |
+| `apply_voice` | Rewrite existing content in the author's voice. Modes: `rewrite`, `shrink`, `expand`, `custom`. Supports `contextBefore`/`contextAfter`, `inputType`, `category`. |
 | `generate_content` | Generate NEW content in author's voice. Args: `instruction`, optional `query` (topic for retrieval), `contextBefore`/`contextAfter`, `category`, `targetWords`. |
-| `research` | Retrieve raw writing examples matching a query. Returns the author's actual passages (no rewrite). Use for agent reasoning, style reference, or feeding into your own prompt. Args: `query`, optional `category`, `profileId`. |
 
 **apply_voice parameters**: `content`, `mode`, `contextBefore`, `contextAfter`, `category`, `inputType` (human/ai/ai-assisted), `targetWords` (max 2000), `format` (markdown/plaintext).
 
@@ -261,89 +237,14 @@ Custom categories can be created in Voice Studio.
 
 ---
 
-## Voice Emulation Protocol
+## How to Write in the User's Voice
 
-This is how agents write in the author's voice. Load the voice profile, pull samples, write with the profile as constraints, then run anti-AI detection to verify authenticity.
+Two API endpoints do the voice work. **Do not write in the voice yourself** — the API is the only path that produces reliable voice quality. Attempting to emulate the voice from profile rules has been evaluated and does not meet the quality bar.
 
-### Step 1: Load the Voice Profile
-Call `get_voice_profile` to read the full linguistic fingerprint. Internalize all 6 categories — these are your behavioral rules, not suggestions.
+- **Rewrite existing text** → use `/voice-apply` (calls `apply_voice`)
+- **Generate new content** → use `/voice-generate` (calls `generate_content`)
 
-### Step 2: Pull Writing Samples
-Call `research` with queries matching the topic you're writing about. Read 2-3 result sets to absorb the author's actual phrasing, rhythm, and word choices. These samples are your ground truth — the profile rules describe patterns, the samples show them in action.
-
-### Step 3: Write with Rules
-Apply the voice profile rules as constraints while writing:
-- **Diction**: Use the author's word register, not yours
-- **Syntax**: Match their clause complexity and sentence patterns
-- **Punctuation**: Use their interpolation marks (em-dash vs parentheses vs comma splices)
-- **Rhetoric**: Match their epistemic stance (hedging vs assertion)
-- **Discourse**: Follow their structural patterns (how they open, transition, close)
-- **Idiolect**: Reproduce their signature quirks and recurring phrases
-- **Sentence Distribution**: Mix short/medium/long sentences to match their percentages
-
-### Step 4: Anti-AI Detection
-
-Two tiers. Tier 1 rules are **hard rules** — fix unconditionally, no voice profile override. These patterns are so statistically associated with AI that detectors flag them regardless of context. Tier 2 rules are **voice-gated** — check against the voice profile before fixing.
-
-#### Tier 1: Hard Rules (Always Fix)
-
-**Em-dashes — near-zero tolerance.** AI uses em-dashes at 5-10x human density. This is one of the strongest AI signals in 2025+ detectors. Convert to periods, commas, or parentheses. Do not use more than 1 em-dash per 500 words. Even authors who use em-dashes do not use them at AI frequency.
-
-**Contrastive formula — never use.** These constructions are AI fingerprints:
-- "It's not X, it's Y" / "This isn't X, it's Y"
-- "Rather than X, we should Y"
-- "Instead of X, consider Y"
-- "Not merely X, but Y"
-Rewrite without the formula. State the point directly.
-
-**Nuclear phrases — kill on sight.** These phrases are 100-900x more frequent in AI text than human text. No human writes them at this density:
-- "valuable insights" (902x) · "indelible mark" (319x) · "rich tapestry" (227x)
-- "crucial role in shaping" (250x) · "adds a layer of complexity" (194x)
-- "a stark reminder" (151x) · "fostering a sense" (138x) · "nuanced understanding" (115x)
-- "unwavering commitment" (256x) · "multifaceted nature" (92x) · "beacon of hope" (58x)
-- "delve deeper" (72x) · "navigate the complex" (87x) · "transformative power" (74x)
-- "shed light on" · "serves as a testament" · "underscores the importance"
-
-**Copula avoidance — use simple verbs.** AI replaces "is" with "serves as", "has" with "boasts", "shows" with "underscores." This is a telltale pattern. Use the simple verb.
-
-**Sycophantic filler — cut unconditionally.** "Interestingly", "It's worth noting", "Notably", "It is important to note that", "It's crucial to understand" — these are AI padding. Delete them. They add nothing.
-
-**Contraction consistency — mix intentionally.** Uniform contraction use (100% contractions OR 100% expanded) is an AI signal. Real humans are inconsistent. Use "don't" in one sentence and "does not" three sentences later. The inconsistency IS the authenticity signal. Check the voice frame or profile for specific guidance.
-
-**Colon density — cap usage.** AI overuses colons. Cap at 1 per 400-500 words depending on the voice frame. Business Framed and Provocateur: no colons at all. Authority: 1 per post. Long-form frames: 1 per 400-500 words.
-
-**Register uniformity — break it.** AI maintains a single consistent register throughout. Real writing mixes formal vocabulary with casual asides, academic precision with colloquial reactions. Intentionally vary register within a piece. This is the "bidirectional sophistication" principle from empirical testing (GPTZero 100% → 3%).
-
-#### Tier 2: Voice-Gated Checks (Check Profile First)
-
-These patterns are suspicious but may match the author's voice. Check the profile before fixing.
-
-- **AI vocabulary**: "additionally", "furthermore", "landscape", "tapestry", "interplay", "pivotal", "delve", "paradigm", "leverage", "robust", "seamlessly" — check every word against the author's diction. If they don't use it, you can't either
-- **Inflated significance**: "marking a pivotal moment", "a significant milestone" — does the author elevate this way? If not, cut it
-- **Vague attribution**: "Experts argue", "Studies show" — does the author cite this way or make direct claims?
-- **Formula transitions**: "Despite these challenges", "Future Outlook", "In conclusion", "Moreover", "Furthermore" — does the author use these? Check discourse rules
-- **Rule of three**: Forcing ideas into triplets. Some authors do this naturally (check rhetoric rules). If not, break it
-- **Elegant variation**: Cycling synonyms — "the man...the individual...the person." Use whatever the author would repeat
-- **Sentence length uniformity**: AI defaults to medium-length sentences. Check your short/medium/long/very-long percentages against the author's distribution. Force variation to match
-- **Too-clean structure**: AI writes perfect essay structure. Real writing has asides, interruptions, unexpected turns. Match the author's discourse patterns
-- **Uniform paragraph length**: AI writes ~3-4 sentence paragraphs consistently. Match the author's paragraph rhythm from samples
-- **Mid-formal default**: AI gravitates toward neutral professional register. Match the author's register exactly, even if blunt, profane, or fragmentary
-- **Hedging where the author asserts**: "could potentially", "it might be argued" — if the rhetoric rules say direct claims, delete all hedging
-
-#### Final Check
-
-Re-read the complete output:
-1. Count em-dashes. If more than 1 per 500 words, convert the extras
-2. Scan for any contrastive formula. Rewrite if found
-3. Grep for nuclear phrases. Kill any survivors
-4. Check contraction consistency. Are contractions mixed inconsistently (not 100% one way)?
-5. Count colons. Within the frame's limit?
-6. Check register variation. Is the tone monotonously consistent, or does it mix naturally?
-7. Scan for copula inflation ("serves as", "boasts", "underscores"). Simplify to plain verbs
-8. Would a reader who knows this author believe they wrote this?
-9. Does any sentence sound like "AI writing" rather than this specific person?
-
-If anything fails, rewrite that section. Don't patch — rewrite using the samples as reference.
+The server handles profile loading, sample retrieval, voice-guided generation, and anti-AI passes in one call. See `docs/protocol.md` for endpoint reference and parameters.
 
 ---
 

@@ -1,19 +1,20 @@
 ---
-name: voice-apply
+name: voice-generate
 description: |
-  Rewrite existing content in the user's voice via the Author's Voice API.
-  Calls apply_voice — server-side pipeline handles profile loading, sample
-  retrieval, voice-guided rewrite, and anti-AI passes.
+  Generate NEW content in the user's voice via the Author's Voice API.
+  Calls generate_content — server-side pipeline handles profile loading,
+  sample retrieval, voice-guided generation, and anti-AI passes.
 
-  Use when user says: "rewrite in my voice", "polish in my voice",
-  "apply voice", "voice this", "polish this".
+  Use when user says: "write a post about X", "draft an email about X",
+  "write me a tweet about X", "generate content in my voice",
+  "write X in my voice".
 
-  For NEW content (no source text), use /voice-generate instead.
+  For REWRITING existing text, use /voice-apply instead.
 ---
 
-# Voice Apply
+# Voice Generate
 
-Rewrite the user's existing text in their voice by calling the `apply_voice`
+Generate new content in the user's voice by calling the `generate_content`
 endpoint. The server does the voice work — you gather inputs, call the API,
 return the result. Do not attempt to emulate the voice yourself.
 
@@ -30,11 +31,11 @@ Fallback: config.md → `$AV_API_KEY` → `~/.openwriter/config.json`.
 
 ## Inputs to Collect
 
-- **content** (required): the text to rewrite
+- **instruction** (required): what to write (e.g., "a tweet about AI detection tools")
 - **category** (required): `x`, `blog`, `email`, `newsletter`, `linkedin`, `technical`, `business`, `academic`, `fiction`. If ambiguous, ask the user.
-- **mode** (default `rewrite`): `rewrite` | `shrink` | `expand` | `custom`
-- **inputType** (default `ai-assisted`): `human` (author's own writing — preserve quirks), `ai` (generic AI — rewrite from scratch), `ai-assisted` (mixed)
-- **contextBefore / contextAfter**: surrounding paragraphs when editing inside a larger document. Guides flow. Never included in output.
+- **query** (optional): topic keywords for sample retrieval. Use when the topic differs from the instruction wording. If omitted, instruction + context are used for retrieval.
+- **targetWords** (optional): target length (max 2000)
+- **contextBefore / contextAfter**: surrounding paragraphs when inserting into existing text. Guides flow. Never included in output.
 
 ## Call
 
@@ -44,11 +45,11 @@ curl -s -N -X POST "https://api.authors-voice.com/api/voice/mcp" \
   -H "Content-Type: application/json" \
   -H "Accept: application/json, text/event-stream" \
   -d '{"jsonrpc":"2.0","id":1,"method":"tools/call","params":{
-    "name":"apply_voice","arguments":{
-      "content":"<text>",
-      "mode":"rewrite",
+    "name":"generate_content","arguments":{
+      "instruction":"<what to write>",
       "category":"<category>",
-      "inputType":"ai-assisted",
+      "query":"<optional topic>",
+      "targetWords":500,
       "contextBefore":"<optional>",
       "contextAfter":"<optional>",
       "format":"plaintext"

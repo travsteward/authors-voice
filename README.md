@@ -17,4 +17,4 @@ Paste the command into your agent. It walks you through setup — generating an 
 - **Apply** your voice to rewrite AI-generated content or generate new content that sounds like you
 - **Detect** and eliminate AI patterns that trigger detection tools
 
-18 tools. One skill. Your voice.
+17 tools. One skill. Your voice.

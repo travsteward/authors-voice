@@ -13,15 +13,6 @@ curl -s https://api.authors-voice.com/api/voice/profiles/default \
 # Optional: ?format=detailed for profile ID + summary
 ```
 
-**Research writing samples** — full-text semantic search against author's corpus:
-```bash
-curl -s -X POST https://api.authors-voice.com/api/voice/research \
-  -H "Authorization: Bearer $AV_API_KEY" \
-  -H "Content-Type: application/json" \
-  -d '{"query": "topic keywords", "category": "x"}'
-# Returns: { examples[], totalExamples, totalWords, matchQuality }
-```
-
 **Apply voice** — rewrite content in the author's voice:
 ```bash
 curl -s -X POST https://api.authors-voice.com/api/voice/apply \
@@ -36,7 +27,6 @@ curl -s -X POST https://api.authors-voice.com/api/voice/apply \
 |----------|--------|---------|
 | `/api/voice/profiles` | GET | List profiles with counts |
 | `/api/voice/profiles/:profileId` | GET | Full voice profile (use `default` for default) |
-| `/api/voice/research` | POST | Semantic search against writing samples |
 | `/api/voice/apply` | POST | Rewrite content in author's voice |
 | `/api/voice/setup` | POST | Analyze samples and build voice profile |
 | `/api/voice/content` | GET | List writing samples (query: profileId, category) |
@@ -63,7 +53,7 @@ curl -s -X POST "https://api.authors-voice.com/api/voice/mcp" \
 
 ---
 
-## Available Tools (19)
+## Available Tools (17)
 
 ### Content Import (7 tools)
 
@@ -85,14 +75,12 @@ curl -s -X POST "https://api.authors-voice.com/api/voice/mcp" \
 | `get_voice_profile` | Get full voice guidelines — 6 linguistic categories + sentence stats. Use before writing to understand the author's patterns. Optional `profileId`. |
 | `setup_voice` | Analyze samples → create/update voice profile. Args: `profileName`, optional `forceReanalyze`. Call after importing content. |
 
-### Voice Application (4 tools)
+### Voice Application (2 tools)
 
 | Tool | Description |
 |------|-------------|
-| `apply_voice` | **Programmatic API endpoint** for transforming content in the author's voice. Use when building integrations or code that calls the Authors Voice API. Modes: `rewrite`, `shrink`, `expand`, `custom`. Supports `contextBefore`/`contextAfter`, `inputType`, `category`. |
+| `apply_voice` | Rewrite existing content in the author's voice. Modes: `rewrite`, `shrink`, `expand`, `custom`. Supports `contextBefore`/`contextAfter`, `inputType`, `category`. |
 | `generate_content` | Generate NEW content in author's voice. Args: `instruction`, optional `query` (topic for retrieval), `contextBefore`/`contextAfter`, `category`, `targetWords`. |
-| `research` | Retrieve raw writing examples matching a query. Returns the author's actual passages (no rewrite). Use for agent reasoning, style reference, or feeding into your own prompt. Args: `query`, optional `category`, `profileId`. |
-| `evaluate_voice_match` | Score your generated output against the author's voice samples — self-correcting feedback loop. Returns composite 0-10, per-axis breakdown (`sentence_rhythm`, `diction`, `tone_register`, `structure`), and actionable critique. Call AFTER writing; if composite < 7, regenerate passing the critique as correction context. Args: `output`, `query` (same anchor used in generation), optional `category`, `profileId`. Deterministic (temp=0). |
 
 **apply_voice parameters**: `content`, `mode`, `contextBefore`, `contextAfter`, `category`, `inputType` (human/ai/ai-assisted), `targetWords` (max 2000), `format` (markdown/plaintext).
 
