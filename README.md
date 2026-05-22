@@ -1,6 +1,6 @@
 # authors-voice
 
-> **AI writing that sounds like you, not AI. Roughly 80% of the way to your real voice, a hard jump above what stock prompting and fine-tuning produce.**
+> **AI writing that sounds like you, not AI.**
 
 Most attempts to make AI sound like you start the same way. Train it. Fine-tune it. Feed it your samples and tell it to imitate. The model doesn't actually learn you from any of this. It pattern-matches at the lexical layer, lifting your common words and sentence shapes without ever building a deep representation of how you think. Cold-start imitation tops out shallow.
 
@@ -13,6 +13,8 @@ The result is AI writing that sounds like you. Not AI imitating you.
 On top of the anchor, four layers sharpen the output. A list of AI words and constructions the model must never use, because the moment it stops channeling the anchor it reverts to its trained register and reaches for the same fifty tells. Presentation choices you make consistently, like whether you capitalize after a colon or use the Oxford comma, small mechanical preferences that read as authentic. A sentence-length and punctuation rhythm pulled from your own writing, so the cadence matches even when the diction is on loan. A growing folder of your samples that the skill mines as the negative rules and rhythm get re-derived.
 
 Each sample you add updates the NEVER rules and the sentence rhythm against your latest corpus. The anchor and presentation fingerprints don't auto-refresh. Regenerate those when you've added enough new writing to shift the matches, or when you want a fresh pass. The profile gets sharper the more you write and the more often you ask for a refresh.
+
+Roughly 80% of the way to your real voice. A hard jump above what stock prompting and fine-tuning produce.
 
 ## Install
 
