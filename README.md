@@ -58,14 +58,20 @@ The skill is self-routing — you don't memorize subcommands. Just tell the agen
 - *"add this essay to my voice profile"* → appends, re-analyzes
 - *"write me a tweet about X"* → uses your voice automatically
 
-## Two Pathways
+## The Three Pieces
 
-| Path | When | How |
-|------|------|-----|
-| **Local skill** (default) | Anything an agent can do in-session | The `SKILL.md` body — anchor + NEVER + fingerprints + corpus + minion dispatch |
-| **Paid API** | OpenWriter plugin right-click, programmatic workflows | See `docs/api/protocol.md` — same anchor system, hosted endpoint |
+Author's Voice is one system in three forms. Most users want the first two together.
 
-Both share the same anchor blend and the same Apply Protocol. The API exists for surfaces where running a skill in-session isn't possible.
+**1. The skill (this repo) — free, local, anywhere**
+The anchor protocol, NEVER rules, fingerprints, and corpus extraction as pure markdown. Runs in any agent that reads `SKILL.md` — Claude Code, Codex, Cursor, anything skill-aware. No API key, no signup, your corpus never leaves your disk. This is the engine.
+
+**2. [OpenWriter](https://openwriter.io) — the writing surface (recommended pairing)**
+The skill is the brain; OpenWriter is the canvas. A document editor built for writing *with* an AI agent rather than around one — your voice profile loads automatically, every paragraph stays anchored as you draft, and the corpus you build here feeds straight back into the skill. **Free tier covers the full writing flow** ([openwriter.io](https://openwriter.io) — sign up with email). The skill and OpenWriter are designed as a pair; you can use either alone, but together they're the intended experience.
+
+**3. Author's Voice API — paid, for plugin and programmatic flows**
+A hosted endpoint that runs the same anchor system as the skill. Used by OpenWriter's right-click voice actions (rewrite / shrink / expand / insert), and by anyone wiring voice-matched output into their own workflow. Reach for this only when running a skill in-session isn't possible. Docs under `docs/api/`.
+
+The free skill + free OpenWriter combo gets you ~95% of the way. The paid API is for surfaces where the skill can't run inline.
 
 ## How It Works
 
