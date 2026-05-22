@@ -65,13 +65,22 @@ Author's Voice is one system in three forms. Most users want the first two toget
 **1. The skill (this repo) — free, local, anywhere**
 A drop-in voice mode for any AI agent. When you ask for prose, the host agent dispatches a specialized writing sub-agent configured by your voice profile, so what comes back reads like you instead of like the model's default. Agent-agnostic, no API key, no signup, your corpus stays on your disk. The engine of the system.
 
-**2. [OpenWriter](https://openwriter.io) — the writing surface (recommended pairing)**
-The skill is the brain; OpenWriter is the canvas. A document editor built for writing *with* an AI agent rather than around one — your voice profile loads automatically, every paragraph stays anchored as you draft, and the corpus you build here feeds straight back into the skill. **Free tier covers the full writing flow** ([openwriter.io](https://openwriter.io) — sign up with email). The skill and OpenWriter are designed as a pair; you can use either alone, but together they're the intended experience.
+**2. The OpenWriter plugin — voice editing inside your document (paid)**
+Install Author's Voice as a plugin inside [OpenWriter](https://openwriter.io), the document editor built for AI-assisted writing. Select any text and the right-click menu unlocks a set of voice-matched actions:
 
-**3. Author's Voice API — paid, for plugin and programmatic flows**
-A hosted endpoint that runs the same anchor system as the skill. Used by OpenWriter's right-click voice actions (rewrite / shrink / expand / insert), and by anyone wiring voice-matched output into their own workflow. Reach for this only when running a skill in-session isn't possible. Docs under `docs/api/`.
+- **Rewrite** — recast the selection in your voice
+- **Shrink** — tighten without losing the point
+- **Expand** — lengthen in your voice, surrounding paragraphs as context
+- **Insert** — generate a new paragraph between two existing ones, aware of what comes before and after
+- **Modify** — apply a custom instruction (e.g. *"make this more skeptical"*)
+- **Fill / Fill-sentence** — gap-fill inside an existing paragraph or sentence
 
-The free skill + free OpenWriter combo gets you ~95% of the way. The paid API is for surfaces where the skill can't run inline.
+Your voice profile loads automatically; every action runs through the same anchor system as the skill. OpenWriter itself is **free** ([openwriter.io](https://openwriter.io) — sign up with email); the plugin is the paid voice layer that sits on top.
+
+**3. The Author's Voice API (paid) — for programmatic and workflow integration**
+A hosted endpoint that runs the same anchor system, callable from any code. For wiring voice-matched output into automation pipelines, custom apps, or surfaces where neither the skill nor the plugin fits. Docs under `docs/api/`.
+
+The free skill alone covers ~95% of writing inside an AI agent. Add the **OpenWriter plugin** if you draft inside a real document editor and want right-click voice edits without leaving it. Reach for the **API** only if you're building something programmatic.
 
 ## How It Works
 
