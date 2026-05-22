@@ -63,7 +63,7 @@ The skill is self-routing — you don't memorize subcommands. Just tell the agen
 Author's Voice is one system in three forms. Most users want the first two together.
 
 **1. The skill (this repo) — free, local, anywhere**
-A drop-in voice mode for any AI agent. When you ask for prose, the host agent dispatches a specialized writing sub-agent — the minion — configured by your voice profile, so what comes back reads like you instead of like the model's default. Agent-agnostic markdown, no API key, no signup, your corpus stays on your disk. The engine of the system.
+A drop-in voice mode for any AI agent. When you ask for prose, the host agent dispatches a specialized writing sub-agent configured by your voice profile, so what comes back reads like you instead of like the model's default. Agent-agnostic markdown, no API key, no signup, your corpus stays on your disk. The engine of the system.
 
 **2. [OpenWriter](https://openwriter.io) — the writing surface (recommended pairing)**
 The skill is the brain; OpenWriter is the canvas. A document editor built for writing *with* an AI agent rather than around one — your voice profile loads automatically, every paragraph stays anchored as you draft, and the corpus you build here feeds straight back into the skill. **Free tier covers the full writing flow** ([openwriter.io](https://openwriter.io) — sign up with email). The skill and OpenWriter are designed as a pair; you can use either alone, but together they're the intended experience.
