@@ -1,14 +1,18 @@
 # authors-voice
 
-> **Constructed voice** for AI agents. The skill-based path to 60–80% voice-matched writing — no API key required, no signup, no corpus upload to anyone.
+> **AI writing that sounds like you, not AI.**
 
-Anchors the agent to a training-data author blend (matched at [openwriter.io/voice-match](https://openwriter.io/voice-match)), then the agent does best-effort extraction of NEVER rules + presentation fingerprints + sentence stats + coined terms + curated examples from a corpus you build up on your own disk. Pure markdown — no dependencies. Gets better as you add more samples.
+Most attempts to make AI sound like you start the same way. Train it. Fine-tune it. Feed it your samples and tell it to imitate. The model doesn't actually learn you from any of this. It pattern-matches at the lexical layer, lifting your common words and sentence shapes without ever building a deep representation of how you think. Cold-start imitation tops out shallow.
 
-For plugin and programmatic flows, an optional **paid API path** is documented under `docs/api/` — same anchor system, served as a hosted endpoint.
+Flip the direction. The model already carries deep internal representations of widely-published authors it was trained on at scale, voices it can channel with real fidelity because it saw thousands of pages of each. The move is to identify which of those authors a user statistically resembles, assign proportional weights to the closest matches, and instruct the model to write as that weighted blend. Your voice gets reconstructed as a coordinate inside the model's existing author space, anchored to authors it has already mastered.
 
-## Replaces
+That changes the problem. The model isn't being asked to learn anything new about you. It's being asked to mix voices it knows cold, in proportions that triangulate your position among them. The anchor does the heavy lifting before a single sample of yours enters the prompt. The blend is the voice.
 
-This skill replaces the older `writers-voice` skill and the legacy `voice-apply`, `voice-generate`, `voice-setup`, `voice-upload`, `voice-manage`, and `voice-automate` skills. They are now one trigger: `/authors-voice`.
+The result is AI writing that sounds like you. Not AI imitating you.
+
+On top of the anchor, four layers sharpen the output. A list of AI words and constructions the model must never use, because the moment it stops channeling the anchor it reverts to its trained register and reaches for the same fifty tells. Presentation choices you make consistently, like whether you capitalize after a colon or use the Oxford comma — small mechanical preferences that read as authentic. A sentence-length and punctuation rhythm pulled from your own writing, so the cadence matches even when the diction is on loan. A growing folder of your samples that the skill mines to tighten every layer.
+
+Each sample you add hardens the NEVER rules and tunes the rhythm to yours. Regenerating the anchor (or asking the agent to) re-weights the blend against your accumulated corpus. The profile gets sharper the more you write.
 
 ## Install
 
@@ -115,6 +119,10 @@ The more samples you add, the more confident the analysis:
 ## License
 
 MIT. See [LICENSE](./LICENSE).
+
+## Replaces
+
+This skill replaces the older `writers-voice` skill and the legacy `voice-apply`, `voice-generate`, `voice-setup`, `voice-upload`, `voice-manage`, and `voice-automate` skills. They are now one trigger: `/authors-voice`.
 
 ## History
 
