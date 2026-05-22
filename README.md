@@ -8,7 +8,7 @@ Flip the direction. The model already carries deep internal representations of w
 
 That changes the problem. The model isn't being asked to learn anything new about you. It's being asked to mix voices it knows cold, in proportions that triangulate your position among them. The anchor does the heavy lifting before a single sample of yours enters the prompt. The blend is the voice.
 
-The result is AI writing that sounds like you. Not AI imitating you.
+The result is AI writing that sounds like you. Not AI imitating you. Roughly 80% of the way to your real voice. A hard jump above what stock prompting and fine-tuning produce.
 
 On top of the anchor, four layers sharpen the output. A list of AI words and constructions the model must never use, because the moment it stops channeling the anchor it reverts to its trained register and reaches for the same fifty tells. Presentation choices you make consistently, like whether you capitalize after a colon or use the Oxford comma, small mechanical preferences that read as authentic. A sentence-length and punctuation rhythm pulled from your own writing, so the cadence matches even when the diction is on loan. A growing folder of your samples that the skill mines as the negative rules and rhythm get re-derived.
 
