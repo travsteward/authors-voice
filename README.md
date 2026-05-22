@@ -10,7 +10,7 @@ That changes the problem. The model isn't being asked to learn anything new abou
 
 The result is AI writing that sounds like you. Not AI imitating you.
 
-On top of the anchor, four layers sharpen the output. A list of AI words and constructions the model must never use, because the moment it stops channeling the anchor it reverts to its trained register and reaches for the same fifty tells. Presentation choices you make consistently, like whether you capitalize after a colon or use the Oxford comma — small mechanical preferences that read as authentic. A sentence-length and punctuation rhythm pulled from your own writing, so the cadence matches even when the diction is on loan. A growing folder of your samples that the skill mines to tighten every layer.
+On top of the anchor, four layers sharpen the output. A list of AI words and constructions the model must never use, because the moment it stops channeling the anchor it reverts to its trained register and reaches for the same fifty tells. Presentation choices you make consistently, like whether you capitalize after a colon or use the Oxford comma, small mechanical preferences that read as authentic. A sentence-length and punctuation rhythm pulled from your own writing, so the cadence matches even when the diction is on loan. A growing folder of your samples that the skill mines to tighten every layer.
 
 Each sample you add hardens the NEVER rules and tunes the rhythm to yours. Regenerating the anchor (or asking the agent to) re-weights the blend against your accumulated corpus. The profile gets sharper the more you write.
 
