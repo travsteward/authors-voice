@@ -64,21 +64,6 @@ The skill is self-routing. You don't memorize subcommands. Just tell the agent w
 - *"add this essay to my voice profile"* → appends, re-analyzes
 - *"write me a tweet about X"* → uses your voice automatically
 
-## The Three Pieces
-
-Author's Voice is one system in three forms. Most users want the first two together.
-
-**1. The skill (this repo). Free, local, anywhere.**
-A drop-in voice mode for any AI agent. When you ask for prose, the host agent dispatches a specialized writing sub-agent configured by your voice profile, so what comes back reads like you instead of like the model's default. Agent-agnostic, no API key, no signup, your corpus stays on your disk. The engine of the system.
-
-**2. The OpenWriter plugin. Same voice, inside your document.**
-The same anchor system as the skill, but running inside [OpenWriter](https://openwriter.io), the document editor built for AI-assisted writing. Select any text in your draft and the right-click menu runs the voice actions inline: **rewrite**, **shrink**, **expand**, **insert** (a new paragraph between two existing ones, with the surrounding paragraphs handed in as context), **modify** (custom instruction like *"make this more skeptical"*), **fill / fill-sentence** (gap-fill inside an existing paragraph). Same engine, no copy-paste round-trip to your AI terminal. [OpenWriter](https://openwriter.io) is free to use. The plugin is a paid integration for people who'd rather edit voice inline than tab over to an agent every time.
-
-**3. The Author's Voice API. For programmatic and workflow integration.**
-Same anchor system, hosted endpoint, callable from any code. Drop it into newsletter pipelines, blog drafting, social schedulers, CMS webhooks, sales outreach, Zapier / n8n steps, anywhere you'd want a "voice this" step. Docs under `docs/api/`.
-
-The three pieces are **surface choices, not feature tiers**. The free skill is the full system, anchor and NEVER rules and rhythm and corpus, wherever you have an AI agent. The plugin is the same engine inside a document editor. The API is the same engine inside your code.
-
 ## How It Works
 
 Your voice profile lives in `voice/` as a handful of `.md` files the agent reads at write time:
@@ -88,14 +73,14 @@ Your voice profile lives in `voice/` as a handful of `.md` files the agent reads
 | `anchor.md` | One-time match from [openwriter.io/voice-match](https://openwriter.io/voice-match) (or skill-mode). Refresh on demand. | 3 to 5 training-data authors with weights |
 | `stats.md` | Auto-regenerated from corpus on every analysis run | Sentence distribution + punctuation density |
 | `never-rules.md` | Auto-regenerated from corpus on every analysis run. Manual additions preserved. | AI words and phrases the model must never use |
-| `fingerprints.md` | Set at first-run from the openwriter.io match. Refresh on demand. | Presentation choices (Oxford comma, capitalization after colon, contraction frequency) |
+| `fingerprints.md` | Agent extracts from corpus during analysis runs. Manual overrides preserved. | Presentation choices (Oxford comma, capitalization after colon, contraction frequency) |
 | `coined-terms.md` | You curate | Your repeated coinages |
 | `examples.md` | You curate | Reference paragraphs in your voice |
 | `status.md` | Auto-regenerated on every analysis run | Current tier and what's locked next |
 
 Plus `voice/corpus/`. Your raw samples accumulating over time. None of `voice/*` is committed. It's all local to your disk.
 
-What auto-updates on every sample add: NEVER rules, sentence stats, status. What needs explicit regeneration: anchor weights, fingerprints. Ask the agent to "regenerate my anchor" or "rebuild my fingerprints" when you've added enough new writing to want a fresh pass.
+What updates reliably on every sample add: NEVER rules, sentence stats, status. What gets re-derived in protocol but agents sometimes skip: fingerprints (ask for a rebuild if you want certainty). What needs an explicit ask: anchor weights ("regenerate my anchor"). The corpus folder is yours to grow.
 
 ## Progressive Tiers
 
@@ -119,6 +104,10 @@ The more samples you add, the more confident the analysis.
 
 - A Claude Code or compatible agent that supports skills (no Node.js dependency)
 - An initial visit to [openwriter.io/voice-match](https://openwriter.io/voice-match) for the anchor (free, no signup), or use skill-mode to build it locally
+
+## Beyond the skill
+
+Pairs naturally with [OpenWriter](https://openwriter.io), the free AI writing surface. Same anchor system also powers the paid Author's Voice plugin (inline voice edits inside OpenWriter) and the paid API (programmatic voice-matched output for workflows and apps). See [authors-voice.com](https://authors-voice.com) when you outgrow the skill alone.
 
 ## License
 
