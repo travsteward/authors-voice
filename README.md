@@ -110,6 +110,10 @@ The more samples you add, the more confident the analysis:
 
 MIT. See [LICENSE](./LICENSE).
 
+## History
+
+The local-skill half of `/authors-voice` started life as the standalone `writers-voice` skill. Its full development history — every iteration of the anchor protocol, NEVER rules, fingerprints, and tier logic — lives in the archived [travsteward/writers-voice](https://github.com/travsteward/writers-voice) repo's git log. Useful reading if you want to see how the constructed-voice architecture evolved before it was unified here.
+
 ## Credits
 
 Built on the negative-first voice profiling architecture from [Author's Voice](https://authors-voice.com). Pairs with [OpenWriter](https://openwriter.io), the writing surface for AI agents.
