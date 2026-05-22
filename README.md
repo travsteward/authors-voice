@@ -69,18 +69,7 @@ A drop-in voice mode for any AI agent. When you ask for prose, the host agent di
 The same anchor system as the skill, but running inside [OpenWriter](https://openwriter.io) — the document editor built for AI-assisted writing. Select any text in your draft and the right-click menu runs the voice actions inline: **rewrite**, **shrink**, **expand**, **insert** (a new paragraph between two existing ones, with the surrounding paragraphs handed in as context), **modify** (custom instruction like *"make this more skeptical"*), **fill / fill-sentence** (gap-fill inside an existing paragraph). Same engine, no copy-paste round-trip to your AI terminal. OpenWriter is **free** ([openwriter.io](https://openwriter.io) — sign up with email); the plugin is a paid integration for people who'd rather edit voice inline than tab over to an agent every time.
 
 **3. The Author's Voice API — for programmatic and workflow integration**
-The same anchor system, exposed as a hosted endpoint callable from any code. Wire voice-matched output into any pipeline:
-
-- **Email flows** — newsletter drafts, cold outreach sequences, support replies, drip campaigns
-- **Blog + long-form** — outline-to-draft, repurposing one post into many, bulk SEO content in your voice
-- **Social** — scheduled posts to X / LinkedIn / Threads pulled from a queue, voice-matched per platform
-- **Repurposing** — turn a blog into a tweet thread, a newsletter into a LinkedIn post, a transcript into show notes
-- **CMS + publishing** — auto-voice on publish in WordPress / Ghost / Substack via webhook
-- **Sales + outreach** — personalized cold emails at scale, voice-matched to the founder writing them
-- **Agent pipelines** — drop into Zapier / n8n / Make / your own backend as a "voice this" step
-- **Books + courses** — chapter-drafting pipelines, lesson copy, marketing emails for a launch
-
-Same engine as the skill and the plugin — surfaces it through `/api/voice/rewrite` and `/api/voice/generate` (plus MCP tools for agentic callers). Full reference under `docs/api/`.
+Same anchor system, hosted endpoint, callable from any code. Drop it into newsletter pipelines, blog drafting, social schedulers, CMS webhooks, sales outreach, Zapier / n8n steps — anywhere you'd want a "voice this" step. Docs under `docs/api/`.
 
 The three pieces are **surface choices, not feature tiers**. The free skill is the full system — anchor, NEVER rules, fingerprints, corpus, the works — wherever you have an AI agent. The plugin is the same engine inside a document editor. The API is the same engine inside your code.
 
