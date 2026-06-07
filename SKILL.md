@@ -16,11 +16,13 @@ description: |
   body below is the default; the API is one access point among others.
 metadata:
   author: travsteward
-  version: "0.19.0"
+  version: "0.19.1"
 license: MIT
 ---
 
 # Author's Voice
+
+_This skill is the free, any-agent manifestation of the larger Author's Voice ecosystem — the same anchor + NEVER-rules + anti-AI engine that powers the paid API, the OpenWriter plugin, and the dashboard. Free here, productized there; one voice DNA across all surfaces._
 
 ## FIRM RULES
 
@@ -55,7 +57,7 @@ Critique-driven revision produces a smaller word count, not larger. If post-revi
 
 ## Architecture
 
-Skeleton prompt template (`prompts/skeleton.md`) assembled from per-user `voice/*.md` files at write time. Editor loads skeleton, substitutes `{INCLUDE: ...}` markers, fills `{TASK}`, spawns a fresh opus sub-agent (the minion) with the assembled prompt. Minion has no session pollution, returns prose, dies. Editor integrates.
+Skeleton prompt template (`prompts/skeleton.md`) assembled from per-user `voice/*.md` files at write time. Editor loads skeleton, substitutes `{INCLUDE: ...}` markers, fills `{TASK}`, spawns a fresh opus sub-agent (the minion) with the assembled prompt (Claude Code) or dispatches via `task({ subagent_type: "general", prompt: <assembled skeleton> })` (OpenCode). Minion has no session pollution, returns prose, dies. Editor integrates.
 
 ```
 writers-voice/
@@ -130,7 +132,7 @@ When the user asks for a voice-matched write:
    **Vary cadence prescriptions across sections.** Same prescription per section produces document-scale rhythm repetition (every section opens with 3 shorts, closes with aphorism) — invisible at section scale, mechanical at document scale.
 
    Edge-case guidance (Rewrite Minion brief template, Blinder Audit brief shape, multi-section context-loading layers, writing minion taxonomy): `docs/apply-protocol-deep.md`.
-5. **Spawn the minion.** `model: "opus"`, `subagent_type: "general-purpose"`, `prompt: <assembled skeleton>`.
+5. **Spawn the minion.** Claude Code: `model: "opus"`, `subagent_type: "general-purpose"`. OpenCode: `subagent_type: "general"` with no model parameter (subagent inherits parent model; encourage using the session's strongest model). Both: `prompt: <assembled skeleton>`.
 6. **Patch NEVER violations + brief-error meta-references.** Smallest local span. Constructive rephrase preferred (contrastive negation → direct statement; banned word → plain equivalent; meta-reference → substantive thread it pointed at). Don't regenerate; minion voice IS the result. Detail: `docs/apply-protocol-deep.md`.
 7. **Post-write audit.** Read `catalog/post-write-audit.md` and apply distribution-level checks (opener repetition, sentence-initial "The", function-word over-use, sentence-length variance, lexical watch list). For each failing check, surgically rewrite the smallest local span — 5-10 light substitutions across a typical draft; heavier rewrites mean misuse. Load-bearing prose wins ties.
 8. **Integrate via openwriter.** `write_to_pad` for edits, `populate_document` for new docs.
@@ -138,7 +140,7 @@ When the user asks for a voice-matched write:
 10. **Polish (optional, two patterns).** (a) **Parallel pick-best** — N (3-6) Apply minions in parallel, same brief; editor picks best whole, mixes variants, or hands all to user. (b) **Anchor Iteration** — `docs/anchor-iteration.md`. Polish-class only; not for rough drafts.
 11. **`/anti-ai` pass.** MANDATORY after Anchor Iteration (which runs no-context and introduces AI tells). OPTIONAL otherwise. Global surface fingerprints (em-dashes, semicolons, contrastive negation, banned diction, register monotony) vs `voice/never-rules.md` + `voice/fingerprints.md`. Complements step 7.
 
-**Use opus.** Sonnet leaks 3+ NEVER violations where opus leaks 0-1. Haiku loses voice.
+**Use opus (Claude Code).** Sonnet leaks 3+ NEVER violations where opus leaks 0-1. Haiku loses voice. **OpenCode:** subagents inherit the parent model — use the strongest model available in the session for prose generation.
 **Send full editing scope.** If 6 of 8 paragraphs need fixes, send all 8 for flow continuity.
 **One minion per natural editing unit** — beat, section, blog post, tweet thread.
 
